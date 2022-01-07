@@ -18,6 +18,26 @@ function App() {
           alert("Get MetaMask!")
           return
         } 
+        try {
+          await ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x4' }],
+          });
+          
+        } catch (switchError) {
+          // This error code indicates that the chain has not been added to MetaMask.
+          if (switchError.code === 4902) {
+            try {
+              await ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [{ chainId: '0x4', chainName: 'rinkeby', rpcUrls: ['https://rinkeby-light.eth.linkpool.io/'] /* ... */ }],
+              });
+            } catch (error) {
+              console.log(error)
+            }
+          }
+          
+        }
 
         const signer = new ethers.providers.Web3Provider(ethereum, 'any').getSigner()
         const Inflection = new ethers.Contract(InflectionAddress, abi, signer)
