@@ -4,7 +4,7 @@ const queryString = window.location.search;
 const id = new URLSearchParams(queryString).get('id');
 
 const abi = require("./utils/Inflection.json").abi;
-const InflectionAddress = '0xACfA1521e79930ddF8af51C091f51Bb1a52b0021';
+const InflectionAddress = '0x35C18e1219C6315383ab7153bE26005Fd3A2E979';
 
 function App() {
 
@@ -25,12 +25,12 @@ function App() {
           });
           
         } catch (switchError) {
-          // This error code indicates that the chain has not been added to MetaMask.
+          // If Chain Not in Metamask (error 4902)
           if (switchError.code === 4902) {
             try {
               await ethereum.request({
                 method: 'wallet_addEthereumChain',
-                params: [{ chainId: '0x4', chainName: 'rinkeby', rpcUrls: ['https://rinkeby-light.eth.linkpool.io/'] /* ... */ }],
+                params: [{ chainId: '0x4', chainName: 'rinkeby', rpcUrls: ['https://rinkeby-light.eth.linkpool.io/'] }],
               });
             } catch (error) {
               console.log(error)
