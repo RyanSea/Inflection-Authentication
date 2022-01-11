@@ -4,7 +4,7 @@ const queryString = window.location.search;
 const id = new URLSearchParams(queryString).get('id');
 
 const abi = require("./utils/Inflection.json").abi;
-const InflectionAddress = '0x3037FAdD92361B09818056AA88E64f7Df1A8a6EF';
+const InflectionAddress = '0xACfA1521e79930ddF8af51C091f51Bb1a52b0021';
 
 function App() {
 
