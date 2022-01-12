@@ -4,7 +4,7 @@ const queryString = window.location.search;
 const id = new URLSearchParams(queryString).get('id');
 
 const abi = require("./utils/Inflection.json").abi;
-const InflectionAddress = '0x35e153F4e5664B459A3B8dFd299bd3c3Ea8e11dB';
+const InflectionAddress = '0x0CA3F8991d66e351F5C18754014f3D057bf67330';
 
 function App() {
 
@@ -18,6 +18,8 @@ function App() {
           alert("Get MetaMask!")
           return
         } 
+
+        //Switch to Rinekby
         try {
           await ethereum.request({
             method: 'wallet_switchEthereumChain',
