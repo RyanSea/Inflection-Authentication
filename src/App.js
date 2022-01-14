@@ -11,6 +11,7 @@ function App() {
 
   if (!accessToken) {
     alert("Error, Please return to the server and re-join")
+    return
   }
 
   async function connectWallet() {
@@ -56,6 +57,7 @@ function App() {
         }
 
         await Inflection.authenticate(user.id, Address)
+        
     
     } catch (error) {
         console.log(error)
@@ -67,7 +69,7 @@ function App() {
   return (
     <div className="App">
 
-      <h3>Inflection OAuth</h3>
+      <h3>Inflection Authentication</h3>
       <button onClick= {connectWallet} id='button'>Authenticate</button>
       <p id="output"></p>
 
