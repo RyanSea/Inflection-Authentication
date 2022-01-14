@@ -1,18 +1,32 @@
 import './App.css';
 const ethers = require('ethers');
-const queryString = window.location.search;
-const id = new URLSearchParams(queryString).get('id');
 
 const abi = require("./utils/Inflection.json").abi;
 const InflectionAddress = '0x0CA3F8991d66e351F5C18754014f3D057bf67330';
 
 function App() {
 
+  const fragment = new URLSearchParams(window.location.hash.slice(1));
+  const [accessToken, tokenType] = [fragment.get('access_token'), fragment.get('token_type')];
+
+  if (!accessToken) {
+    alert("Error, Please return to the server and re-join")
+  }
+
   async function connectWallet() {
-    
+
     try {
 
         const { ethereum } = window
+        const signer = new ethers.providers.Web3Provider(ethereum, 'any').getSigner()
+        const Inflection = new ethers.Contract(InflectionAddress, abi, signer)
+        const Address = (await ethereum.request({ method: "eth_requestAccounts" }))[0]
+        const user = await fetch('https://discord.com/api/users/@me', {
+          headers: {
+            authorization: `${tokenType} ${accessToken}`,
+          },
+        }).then(result => result.json()).catch(console.error)
+
 
         if (!ethereum) {
           alert("Get MetaMask!")
@@ -41,13 +55,7 @@ function App() {
           
         }
 
-        const signer = new ethers.providers.Web3Provider(ethereum, 'any').getSigner()
-        const Inflection = new ethers.Contract(InflectionAddress, abi, signer)
-        const Address = (await ethereum.request({ method: "eth_requestAccounts" }))[0]
-        if (id) {
-          await Inflection.authenticate(id, Address)
-          alert("Authenticated!")
-        }
+        await Inflection.authenticate(user.id, Address)
     
     } catch (error) {
         console.log(error)
@@ -61,7 +69,7 @@ function App() {
 
       <h3>Inflection OAuth</h3>
       <button onClick= {connectWallet} id='button'>Authenticate</button>
-      <p id="output1"></p>
+      <p id="output"></p>
 
     </div>
   );
