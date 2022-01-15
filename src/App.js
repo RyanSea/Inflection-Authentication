@@ -2,7 +2,7 @@ import './App.css';
 const ethers = require('ethers');
 
 const abi = require("./utils/Inflection.json").abi;
-const InflectionAddress = '0x0CA3F8991d66e351F5C18754014f3D057bf67330';
+const InflectionAddress = '0x42685484355f62e2454259DA69108De7CA9C340c';
 
 function App() {
 
