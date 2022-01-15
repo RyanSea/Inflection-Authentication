@@ -28,7 +28,6 @@ function App() {
           },
         }).then(result => result.json()).catch(console.error)
 
-        console.log(user.id)
         if (!ethereum) {
           alert("Get MetaMask!")
           return
@@ -55,7 +54,7 @@ function App() {
           }
           
         }
-        console.log('Running!')
+        
         await Inflection.authenticate(user.id, Address)
         
     
